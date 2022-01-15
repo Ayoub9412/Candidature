@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Candidature.Models.Product>
+
+@{
+    ViewData["Title"] = "List Products";
+    Layout = "_Layout";
+}
+
+<div class="">
+<span class="display-4">Produits</span>
+</div>
+<div class="text-end me-0">
+<p class="">
+    <a href="Product/Create" class="btn btn-outline-info">Create New</a>
+</p>
+</div>
+@if (Model.Count() > 0)
+{
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string result = "Non";
+            if (item.Quantity > 0)
+            {
+                result = "Oui";
+            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <img src="~/uploads/@item.ImageName" style="width:90px;height:auto;" alt="@item.Name Image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <span>
+                        @result
+                    </span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <div class="">
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-outline-info w-25"})
+                    @Html.ActionLink("Details", "Details", new { id=item.Id}, new { @class= "btn btn-info text-white w-25" })
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id}, new { @class = "btn btn-danger text-white w-25" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+    </table>
+}
+else
+{
+    <div class="text-danger display-4"> No Items Found ! </div>
+}
